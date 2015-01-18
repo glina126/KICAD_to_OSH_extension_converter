@@ -51,7 +51,6 @@ int main(int argc, char *argv[])
 
 	// end of program
 	return 0;
-	system("pause");
 }
 
 bool findExtension(string extension, string argument_string)
