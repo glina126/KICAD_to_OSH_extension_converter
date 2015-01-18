@@ -56,11 +56,28 @@ int main(int argc, char *argv[])
 
 bool findExtension(string extension, string argument_string)
 {
-	return true;
+	if (argument_string.find(extension))
+		return true;
+	else
+		return false;
 }
 
 bool renameFile(char * old_file, string new_extension)
 {
-	return true;
+	// extract file name from old_file - contains the whole directory
+	string temp = old_file;
+	int token_pos = temp.find_last_of('\\');
+
+	// eliminate everything before and including the '\'
+	temp.erase(0, token_pos);
+
+	// concatinate the string with our new extension
+	temp += new_extension;
+
+	// rename the file
+	if (rename(old_file, new_extension.c_str()))
+		return true;
+	else
+		return false;
 }
 
