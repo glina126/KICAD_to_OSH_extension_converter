@@ -93,17 +93,26 @@ bool renameFile(char * old_file, string new_extension)
 	string temp = old_file;
 	int token_pos = temp.find_last_of('\\');
 
+#if VERBOSE
 	cout << "token_pos: " << token_pos << endl;
+#endif
 	
-
 	// eliminate everything before and including the '\'
 	temp.erase(0, token_pos+1);
+
+	// find the first '.'
+	token_pos = temp.find(".");
+
+	// erase the extension
+	temp.erase(token_pos, temp.length());
 
 	// concatinate the string with our new extension
 	temp += new_extension;
 
+#if VERBOSE
 	cout << "old_file: " << old_file << endl;
 	cout << "new file name: " << temp.c_str() << endl;
+#endif
 
 	// rename the file
 	if (rename(old_file, temp.c_str()))
