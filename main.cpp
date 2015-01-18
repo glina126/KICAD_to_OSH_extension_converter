@@ -28,12 +28,17 @@ int main(int argc, char *argv[])
 			// convert the char[] to string for easier parsing
 			string temp = argv[i];
 
+			/************************** ADD NEW EXTENSIONS HERE **************************/
 			if (findExtension(".grb", temp))
 			{
-
+				// extension found, convert to *.GKO - board outline
+				
 			}
-		}
-		
+			else if (findExtension(".drl", temp))
+			{
+				// extension found, convert to *.XLN - drill file
+			}
+		}		
 	}
 	else
 	{
