@@ -5,8 +5,9 @@ using namespace std;
 // disable if you dont want it to be loud
 #define VERBOSE 1
 
-// definition
+// definitions
 bool findExtension(string,string); 
+bool renameFile(char *, string);
 
 int main(int argc, char *argv[])
 {
@@ -56,4 +57,8 @@ bool findExtension(string extension, string argument_string)
 	return true;
 }
 
+bool renameFile(char * old_file, string new_extension)
+{
+	return true;
+}
 
