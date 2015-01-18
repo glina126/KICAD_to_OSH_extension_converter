@@ -57,14 +57,16 @@ int main(int argc, char *argv[])
 				}
 			}
 		}	
-		// zip the directory
-		compressFiles(argv[1]);
+		
 	}
 	else
 	{
 		// nothing to convert, abort
 		return 0;
 	}
+
+	// zip the directory
+	//compressFiles(argv[1]);
 
 	// end of program
 	return 0;
@@ -126,9 +128,9 @@ bool renameFile(char * old_file, string new_extension)
 
 void compressFiles(char * name)
 {
-#ifdef _WIN32 
+#ifdef _WIN32
 	//zip directory
-	string command = "compact /c /s ";
+	string command = "compact /c /s:";
 
 	// holds the directory with the file name
 	string file_name = name;
@@ -144,6 +146,9 @@ void compressFiles(char * name)
 	
 	// execute the command 
 	system(command.c_str());
+
+	cout << "command: " << command.c_str() << endl;
+
 
 #else
 	//tar directory
