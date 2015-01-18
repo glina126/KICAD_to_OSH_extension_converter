@@ -24,22 +24,36 @@ int main(int argc, char *argv[])
 	if (argc > 1)
 	{
 		// open file for reading - one at a time
-		for (int i = 0; i < argc; i++)
+		for (int i = 1; i < argc; i++)
 		{
 			// convert the char[] to string for easier parsing
 			string temp = argv[i];
 
+#if VERBOSE
+			cout << "i = " << i << " and argv[i] = " << endl << argv[i] << endl;
+#endif
+
 			/************************** ADD NEW EXTENSIONS HERE **************************/
-			if (findExtension(".grb", temp)) // what we are looking for
+			if (findExtension(".gbr", temp)) // what we are looking for
 			{
 				// extension found, convert to *.GKO - board outline
-				renameFile(argv[i], ".GKO"); // what we want to convert to
+				if (renameFile(argv[i], ".GKO"))// what we want to convert to
+				{
+#if VERBOSE
+					cout << "sucessful rename to .GKO" << endl;
+#endif
+				}
 
 			}
 			else if (findExtension(".drl", temp))
 			{
 				// extension found, convert to *.XLN - drill file
-				renameFile(argv[i], ".XLN");
+				if(renameFile(argv[i], ".XLN"))
+				{
+#if VERBOSE
+					cout << "sucessful rename to .XLN" << endl;
+#endif
+				}
 			}
 		}		
 	}
@@ -55,10 +69,22 @@ int main(int argc, char *argv[])
 
 bool findExtension(string extension, string argument_string)
 {
-	if (argument_string.find(extension))
+	int temp = argument_string.find(extension);
+
+	if (temp > 0)
+	{
+#if VERBOSE
+		cout << "sucessful find of " << extension.c_str() << " at pos " << temp << endl;
+#endif
 		return true;
+	}
 	else
+	{
+#if VERBOSE
+		cout << "unsucessful find of " << extension.c_str() << " at pos " << temp << endl;
+#endif
 		return false;
+	}
 }
 
 bool renameFile(char * old_file, string new_extension)
@@ -67,16 +93,31 @@ bool renameFile(char * old_file, string new_extension)
 	string temp = old_file;
 	int token_pos = temp.find_last_of('\\');
 
+	cout << "token_pos: " << token_pos << endl;
+	
+
 	// eliminate everything before and including the '\'
-	temp.erase(0, token_pos);
+	temp.erase(0, token_pos+1);
 
 	// concatinate the string with our new extension
 	temp += new_extension;
 
+	cout << "old_file: " << old_file << endl;
+	cout << "new file name: " << temp.c_str() << endl;
+
 	// rename the file
-	if (rename(old_file, new_extension.c_str()))
+	if (rename(old_file, temp.c_str()))
 		return true;
 	else
 		return false;
 }
 
+void compressFiles(char * names)
+{
+#ifdef _WIN32 
+	//zip directory
+
+#else
+	//tar directory
+#endif
+}
