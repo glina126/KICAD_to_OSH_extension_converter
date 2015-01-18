@@ -30,14 +30,16 @@ int main(int argc, char *argv[])
 			string temp = argv[i];
 
 			/************************** ADD NEW EXTENSIONS HERE **************************/
-			if (findExtension(".grb", temp))
+			if (findExtension(".grb", temp)) // what we are looking for
 			{
 				// extension found, convert to *.GKO - board outline
-				
+				renameFile(argv[i], ".GKO"); // what we want to convert to
+
 			}
 			else if (findExtension(".drl", temp))
 			{
 				// extension found, convert to *.XLN - drill file
+				renameFile(argv[i], ".XLN");
 			}
 		}		
 	}
