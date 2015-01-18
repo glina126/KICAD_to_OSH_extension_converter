@@ -8,6 +8,7 @@ using namespace std;
 // definitions
 bool findExtension(string,string); 
 bool renameFile(char *, string);
+void compressFiles(char *);
 
 int main(int argc, char *argv[])
 {
@@ -55,7 +56,9 @@ int main(int argc, char *argv[])
 #endif
 				}
 			}
-		}		
+		}	
+		// zip the directory
+		compressFiles(argv[1]);
 	}
 	else
 	{
@@ -121,10 +124,26 @@ bool renameFile(char * old_file, string new_extension)
 		return false;
 }
 
-void compressFiles(char * names)
+void compressFiles(char * name)
 {
 #ifdef _WIN32 
 	//zip directory
+	string command = "compact /c /s ";
+
+	// holds the directory with the file name
+	string file_name = name;
+
+	// find the token
+	int token_pos = file_name.find_last_of("\\");
+
+	// erase the file name leaving just the directory
+	file_name.erase(token_pos, file_name.length());
+
+	// append the command with the directory
+	command.append(file_name);
+	
+	// execute the command 
+	system(command.c_str());
 
 #else
 	//tar directory
